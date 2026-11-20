@@ -1,5 +1,7 @@
 
 import { auth } from "@/auth";
+import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 export default async function TripPage() {
     const session = await auth();
@@ -14,13 +16,16 @@ export default async function TripPage() {
 
 
 //assume user is signed in
+//server component so onclick is unavailable, using redirect link instead
 
     return <div className="space-y-6 container mx-auto px-4 py-8">
         {" "}
         <div>
 
             <h1> DashBoard</h1>
+            <Link href="/trips/new">
             <Button>New Trip</Button>
+            </Link>
         </div>
     </div>
 }
