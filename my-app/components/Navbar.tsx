@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { login } from "@/lib/auth-actions";
+import { login, logOut } from "@/lib/auth-actions";
+import { Session } from "next-auth";
 
-export default function Navbar () {
+//true or not whether user is authenticated
+export default function Navbar ({session}: {session: Session | null}) {
     return <nav  className="bg-white shadow-md py-4 border-gray-200"> 
     <div className="container mx-auto flex justify-between items-center px-6 lg:px-8">
         <Link href={"/"} className="flex item-center">
@@ -13,12 +15,24 @@ export default function Navbar () {
         </Link>
 
         <div className="flex items-center space-x-4">
+            {session ? (
+                <>
             <Link href="{/trips}" className="text-slate-900 hover:text-fuchsia-300">
                 My trips
             </Link>
             <Link href="{/globe}" className="text-slate-900 hover:text-fuchsia-300">
                 Globe
             </Link>
+
+            <button className="flex items-center justify-center bg-gray-800 hover:text-fuchsia-300 text-white p-2 rounded-sm gap-1 cursor-pointer" 
+            onClick={logOut}>
+                Sign Out
+
+            </button>
+            </>
+            ) : (
+
+            
 
             <button className="flex items-center justify-center bg-gray-800 hover:text-fuchsia-300 text-white p-2 rounded-sm gap-1 cursor-pointer" 
             onClick={login}>
@@ -28,6 +42,7 @@ export default function Navbar () {
                 </svg>
 
             </button>
+            )}
         </div>
     </div>
     
