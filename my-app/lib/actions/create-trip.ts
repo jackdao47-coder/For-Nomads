@@ -34,6 +34,7 @@ export async function createTrip(formData: FormData) {
         data: {
             title,
             description,
+            imageUrl,
             startDate,
             endDate,
             userId: session.user?.id,

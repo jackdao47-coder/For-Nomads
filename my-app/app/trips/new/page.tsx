@@ -4,20 +4,28 @@
 "use client";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button"
-import { Form } from "radix-ui";
 import { createTrip } from "@/lib/actions/create-trip";
 import { useState, useTransition } from "react";
+import { UploadButton } from "@/lib/upload-thing";
+import Image from "next/image";
+
+
 
 export default function NewTrip() {
     const [isPending, startTransition] = useTransition();
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
     return (
     <div className="w-full max-w-lg mx-auto mt-10">
         <Card>
             <CardHeader>New Trip</CardHeader>
             <CardContent>
                 <form className="space-y-6" action={(FormData: FormData) => {
+
+                    if(imageUrl) {
+                        FormData.append("imageUrl", imageUrl)
+                    }
                     startTransition(() => {
                     createTrip(FormData);
                 });
@@ -71,6 +79,29 @@ export default function NewTrip() {
                         )}
                         />
                     </div>
+                    </div>
+
+                    <div>
+                        <label>Trip Image</label>
+                        {imageUrl && (
+                            <Image src={imageUrl} alt="Trip Preview" className="w-full rounded-md mas-h-48 object-cover"
+                            width={300}
+                            height={100}
+                            />
+                        )}
+                    <UploadButton
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                            if (res && res[0].ufsUrl) {
+                                setImageUrl(res[0].ufsUrl);
+                            }
+                        }}
+
+
+                        onUploadError={(error: Error) => {
+                            console.error("Upload error: ", error)
+                        }}
+                    />
                     </div>
 
                     <Button type="submit" disabled={isPending} className="w-full">
