@@ -17,10 +17,10 @@ export default function Navbar ({session}: {session: Session | null}) {
         <div className="flex items-center space-x-4">
             {session ? (
                 <>
-            <Link href="/trips" className="text-slate-900 hover:text-fuchsia-300">
+            <Link href="/trips" className="text-slate-900 hover:text-fuchsia-400">
                 My trips
             </Link>
-            <Link href="/globe" className="text-slate-900 hover:text-fuchsia-300">
+            <Link href="/globe" className="text-slate-900 hover:text-fuchsia-400">
                 Globe
             </Link>
 
